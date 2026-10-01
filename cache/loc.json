@@ -20,14 +20,24 @@
   "oid": "520ac1e5a12a9d368dd72c7126711a4fbc1e9ba7"
  },
  "adembtr": {
-  "add": 777,
+  "add": 780,
   "del": 0,
-  "oid": "78e0dd7c97dc769671844fe13cca765891022df8"
+  "oid": "99cd84b7c281e7117ecb7d4dbf300a14d18efa78"
  },
  "arc-agi3-agent": {
   "add": 12045,
   "del": 161,
   "oid": "44d85d1dadf8c8366f797fd0106f62a614ade681"
+ },
+ "arduino-servo-hand": {
+  "add": 163,
+  "del": 0,
+  "oid": "8a70c07e76d0fb9b204e97ce3e3f98215abd61fe"
+ },
+ "brain-edge-architecture": {
+  "add": 14655,
+  "del": 0,
+  "oid": "0cca9201717c815397a65e4481c689a09e975d03"
  },
  "drone-reference-matching": {
   "add": 1649,
@@ -88,6 +98,11 @@
   "add": 303,
   "del": 0,
   "oid": "275c9fbc2465d0046a19f3a404da795af1e5ec9f"
+ },
+ "whisper-phone-dictation": {
+  "add": 515,
+  "del": 0,
+  "oid": "8675828ee746761c8b389392f23dd3152ddeb448"
  },
  "whisperai": {
   "add": 790,
