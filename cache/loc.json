@@ -1,0 +1,102 @@
+{
+ "EKOM": {
+  "add": 5818,
+  "del": 4001,
+  "oid": "1e8d8430f979e87e33309406e7083fb31f66505a"
+ },
+ "English-Tutor-Bot-": {
+  "add": 1079,
+  "del": 0,
+  "oid": "7847b14a096d5fdd0ec939ccea1029fa52e067a1"
+ },
+ "I-mWebsite": {
+  "add": 8635,
+  "del": 37,
+  "oid": "ef4ec41bed7440e33cc021ae58719ad4cf88bc98"
+ },
+ "VTYSPROJE": {
+  "add": 2901,
+  "del": 188,
+  "oid": "520ac1e5a12a9d368dd72c7126711a4fbc1e9ba7"
+ },
+ "arc-agi3-agent": {
+  "add": 12045,
+  "del": 161,
+  "oid": "44d85d1dadf8c8366f797fd0106f62a614ade681"
+ },
+ "drone-reference-matching": {
+  "add": 1649,
+  "del": 12,
+  "oid": "a32ee5c871f88c78b73ed53a5461da09dccba838"
+ },
+ "englishTracker": {
+  "add": 94,
+  "del": 1,
+  "oid": "d113420e54926593a119ef9da9697691e1fb68ab"
+ },
+ "fayansWebsite": {
+  "add": 3998,
+  "del": 117,
+  "oid": "c82fdd6b017602404a78ed8444183013546a2d95"
+ },
+ "mathai": {
+  "add": 69927,
+  "del": 59914,
+  "oid": "21364604fc3caccb07fb299de4eff6589cd2acc4"
+ },
+ "monocular-vo-drone-position": {
+  "add": 19244,
+  "del": 0,
+  "oid": "d56d7ac27898577e77a0ea15eff089fc592dfbd9"
+ },
+ "myVideoGenerator": {
+  "add": 788,
+  "del": 0,
+  "oid": "11f30a8b8c99d7996364610f8b728cac8f02ae7d"
+ },
+ "nuron-teknofest-2026": {
+  "add": 14361,
+  "del": 30,
+  "oid": "62dd021b9bbe9702100e9f38a749ba381ea30d16"
+ },
+ "pdf-editor": {
+  "add": 362,
+  "del": 2,
+  "oid": "8be45a5c7dabaeabf6c43dd953e648d565a84830"
+ },
+ "rag-pdf-qa": {
+  "add": 809,
+  "del": 0,
+  "oid": "43f2556bf86c06830bdd7fe94aa3487fffd75183"
+ },
+ "turkish-plate-ocr": {
+  "add": 419,
+  "del": 0,
+  "oid": "ffce64231760a4d36d2ad489ba3be31e7ffe17f9"
+ },
+ "veriyapilariProje": {
+  "add": 171266,
+  "del": 120519,
+  "oid": "f59045f2339ad2259ada58f5cc7fc063d2d1a358"
+ },
+ "video-kesiti-bulma": {
+  "add": 303,
+  "del": 0,
+  "oid": "275c9fbc2465d0046a19f3a404da795af1e5ec9f"
+ },
+ "whisperai": {
+  "add": 790,
+  "del": 1,
+  "oid": "1c0da933dc04fbe7148b4a69e40eb7159c0bb62c"
+ },
+ "words": {
+  "add": 3675,
+  "del": 2609,
+  "oid": "3ebdad0e10483de6eef1d529e37471003b28b3b9"
+ },
+ "wordsWebsite": {
+  "add": 4366,
+  "del": 238,
+  "oid": "487a931261414a7b0df6a6eba77e7ced2a520b13"
+ }
+}

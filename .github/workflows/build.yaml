@@ -1,0 +1,33 @@
+name: Build profile card
+
+on:
+  schedule:
+    - cron: "17 4 * * *"        # every day, 07:17 in Istanbul
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ["dark_mode.svg", "light_mode.svg", "cache/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch stats and redraw the card
+        run: python today.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USER_NAME: ${{ github.repository_owner }}
+      - name: Commit if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dark_mode.svg light_mode.svg cache/loc.json
+          git diff --cached --quiet || git commit -m "Update profile card stats"
+          git push
