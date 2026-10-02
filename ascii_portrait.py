@@ -2,9 +2,9 @@
 Draws my profile photo with characters.
 
     photo ──► person mask ──► edge-preserving smoothing ──► tone stretch ──► cell average ──► glyph
-              (HSV + blob)     (bilateral filter)            (inside mask)    (80 × 56 grid)   (ink-measured ramp)
+              (HSV + blob)     (bilateral filter)            (inside mask)    (160 × 112 grid)   (ink-measured ramp)
 
-The eyes get a little extra care, because at 80 × 56 an eye is only ~5 × 2 characters:
+The eyes get a little extra care, because at this size an eye is only ~10 × 4 characters:
   1. both eyes are located with OpenCV's Haar cascades;
   2. inside a soft (feathered) window around each eye and eyebrow, local detail is gently boosted;
   3. there, among the *same* ramp glyphs used for the rest of the face, the one whose rendered shape
@@ -14,7 +14,7 @@ Two versions are written, so the portrait is a *positive* image in both GitHub t
   ascii_dark.txt   bright pixels → dense glyphs  (light text on a dark card)
   ascii_light.txt  dark pixels   → dense glyphs  (dark text on a light card)
 
-Usage:  python ascii_portrait.py [--image assets/portrait.jpg] [--cols 80] [--rows 56] [--preview out.png]
+Usage:  python ascii_portrait.py [--image assets/portrait.jpg] [--cols 160] [--rows 112] [--preview out.png]
 """
 import argparse
 import os
@@ -171,8 +171,8 @@ def preview(lines, out_png, dark=True, size=12):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--image", default=os.path.join(HERE, "assets", "portrait.jpg"))
-    ap.add_argument("--cols", type=int, default=80)
-    ap.add_argument("--rows", type=int, default=56)
+    ap.add_argument("--cols", type=int, default=160)
+    ap.add_argument("--rows", type=int, default=112)
     ap.add_argument("--preview", help="also save a PNG preview of the dark version")
     a = ap.parse_args()
 

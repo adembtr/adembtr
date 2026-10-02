@@ -23,7 +23,7 @@ ENROLLED = dt.date(2024, 8, 19)          # first day as a Computer Engineering s
 
 # ── card geometry ───────────────────────────────────────────────────────────────────────────────
 W, H = 1025, 590
-ART_X, ART_Y, ART_FONT, ART_LH = 15, 27, 8.7, 10.0
+ART_X, ART_Y, ART_FONT, ART_LH = 15, 18.7, 4.35, 5.0   # 112 rows of tiny glyphs fill the 560 px art area
 INFO_X, INFO_Y, INFO_FONT, INFO_LH, INFO_CHARS = 450, 30, 16, 20, 58
 ADVANCE = 0.602                          # monospace glyph advance in em (DejaVu Sans Mono / Menlo)
 
