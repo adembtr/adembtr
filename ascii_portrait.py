@@ -4,11 +4,11 @@ Draws my profile photo with characters.
     photo ──► person mask ──► edge-preserving smoothing ──► tone stretch ──► cell average ──► glyph
               (HSV + blob)     (bilateral filter)            (inside mask)    (80 × 56 grid)   (ink-measured ramp)
 
-The eyes get extra care, because at 80 × 56 an eye is only ~5 × 2 characters:
+The eyes get a little extra care, because at 80 × 56 an eye is only ~5 × 2 characters:
   1. both eyes are located with OpenCV's Haar cascades;
-  2. inside a soft (feathered) window around each eye and eyebrow, local detail is boosted (unsharp mask);
-  3. there, a glyph is chosen by *shape* — the one whose rendered bitmap best matches the cell's pixels —
-     from a small set of round and lid-like glyphs ( o O 0 @ ~ = _ - ^ ), instead of by brightness alone.
+  2. inside a soft (feathered) window around each eye and eyebrow, local detail is gently boosted;
+  3. there, among the *same* ramp glyphs used for the rest of the face, the one whose rendered shape
+     best matches the cell's pixels is picked — tone stays close, so the eyes read naturally, not drawn.
 
 Two versions are written, so the portrait is a *positive* image in both GitHub themes:
   ascii_dark.txt   bright pixels → dense glyphs  (light text on a dark card)
@@ -25,7 +25,6 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"     # only used to measure glyph ink / preview
 CANDIDATES = " .`'^,:;-~_=+<>!|il1/\\rcvxzunsoeajtfy?7I*JLYTZ%#&$@WMBQDNHRKOGU80"
-EYE_GLYPHS = ".,'`-_=~^*oO0@"   # round + lid-like shapes, used only around the eyes
 CELL_ASPECT = 0.602 / 1.15        # glyph advance ÷ line height used in the SVG card
 
 
@@ -47,19 +46,19 @@ def build_ramp(levels=22, font_path=FONT):
     return "".join(ramp)
 
 
-def glyph_bitmaps(cell_w, cell_h, font_path=FONT, scale=4):
-    """Each eye glyph rendered at the size of one grid cell, ink scaled so the densest ramp glyph = 1."""
+def glyph_bitmaps(ramp, cell_w, cell_h, font_path=FONT, scale=4):
+    """Each ramp glyph rendered at the size of one grid cell, ink scaled so the densest candidate = 1."""
     from PIL import Image, ImageDraw, ImageFont
     font = ImageFont.truetype(font_path, int(round(cell_w / 0.602 * scale)))
     size = (int(round(cell_w * scale)), int(round(cell_h * scale)))
     maps = {}
-    for ch in dict.fromkeys(EYE_GLYPHS + CANDIDATES.strip()):
+    for ch in dict.fromkeys(CANDIDATES.strip()):
         im = Image.new("L", size, 0)
         ImageDraw.Draw(im).text((0, 0), ch, font=font, fill=255)
         maps[ch] = cv2.resize(np.asarray(im, np.float32) / 255.0, (int(cell_w), int(cell_h)),
                               interpolation=cv2.INTER_AREA)
     top = max(m.mean() for m in maps.values())
-    return {ch: maps[ch] / top for ch in EYE_GLYPHS}
+    return {ch: maps[ch] / top for ch in ramp if ch != " "}
 
 
 def person_mask(bgr):
@@ -109,7 +108,7 @@ def eye_window(shape, eyes):
     return cv2.GaussianBlur(w, (0, 0), 6)
 
 
-def portrait(img_path, cols=80, rows=56, work_px=1000, eye_detail=2.0):
+def portrait(img_path, cols=80, rows=56, work_px=1000, eye_detail=1.2):
     """Everything the line renderer needs: cell tones, silhouette coverage, eye window and full-res tones."""
     bgr = cv2.imread(img_path)
     bgr = cv2.resize(bgr, (work_px, int(work_px * bgr.shape[0] / bgr.shape[1])), interpolation=cv2.INTER_AREA)
@@ -134,7 +133,7 @@ def portrait(img_path, cols=80, rows=56, work_px=1000, eye_detail=2.0):
             "eye": small(window), "full": gray, "cell": (cell_h, cell_w)}
 
 
-def to_lines(p, ramp, glyphs, invert=False, gamma=1.0, eye_thr=0.45, w_tone=8.0):
+def to_lines(p, ramp, glyphs, invert=False, gamma=1.0, eye_thr=0.5, w_tone=12.0):
     top = len(ramp) - 1
     tone, cover, eye, (cell_h, cell_w) = p["tone"], p["cover"], p["eye"], p["cell"]
     v = np.clip(1.0 - tone if invert else tone, 0, 1) ** gamma
@@ -179,12 +178,12 @@ if __name__ == "__main__":
 
     ramp = build_ramp()
     p = portrait(a.image, a.cols, a.rows)
-    glyphs = glyph_bitmaps(p["cell"][1], p["cell"][0])
+    glyphs = glyph_bitmaps(ramp, p["cell"][1], p["cell"][0])
     # gamma > 1 on the light card keeps the dark jacket from turning into a solid block of ink
     for name, inv, gamma in (("ascii_dark.txt", False, 1.0), ("ascii_light.txt", True, 1.35)):
         with open(os.path.join(HERE, name), "w", encoding="utf-8") as f:
             f.write("\n".join(to_lines(p, ramp, glyphs, invert=inv, gamma=gamma)) + "\n")
     if a.preview:
         preview(to_lines(p, ramp, glyphs), a.preview)
-    print(f"ramp {ramp!r} · {a.cols}×{a.rows} · eyes found: {int((p['eye'] > 0.45).sum())} cells "
+    print(f"ramp {ramp!r} · {a.cols}×{a.rows} · eye cells: {int((p['eye'] > 0.5).sum())} "
           f"· wrote ascii_dark.txt, ascii_light.txt")

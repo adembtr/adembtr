@@ -5,7 +5,6 @@
   </picture>
 </a>
 
-<sub>The portrait is my photo redrawn in characters by <a href="ascii_portrait.py"><code>ascii_portrait.py</code></a> · the stats are rebuilt every day by <a href="today.py"><code>today.py</code></a> and GitHub Actions.</sub>
 
 ### Featured work
 
