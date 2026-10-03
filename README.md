@@ -5,6 +5,7 @@
   </picture>
 </a>
 
+<p align="center"><a href="https://adembtr.github.io">Website</a> · <a href="https://www.linkedin.com/in/adembatur">LinkedIn</a> · <a href="mailto:baturadem09@gmail.com">Email</a></p>
 
 ### Featured work
 
